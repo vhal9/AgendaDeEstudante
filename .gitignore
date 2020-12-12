@@ -1,0 +1,52 @@
+.DS_Store
+node_modules/
+/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+*.log
+.classpath
+.project
+.settings
+.gitignore~
+README.md~
+*/eclipse/*
+*/lib/*
+*/modules/*
+*/tmp/*
+*/logs/*
+*/test-result/*
+*/dist/*
+*/precompiled/*
+*.iml
+*.ipr
+
+# Frontend
+*/node_modules/
+*/.idea/
+*/.grunt/*
+frontend/_*
+frontend/dist/
+
+# Play
+backend/arquivos/
+backend/public/
+
+dist
+/backend_old/Ficha do Imóvel.iws
+/backend/src/main/resources/public/*
+/backend/bin/*
+
+\.gradle/
+/backend/src/main/resources/static/
+
+deployGT.sh
