@@ -18,12 +18,15 @@ public class TarefaService {
     @Autowired
     EtiquetaRepository etiquetaRepository;
 
-    public List<Tarefa> listar(Long id){
-        List<Tarefa> tarefas = tarefaRepository.findAllByUsuario_Id(id);
-        for(Tarefa tarefa: tarefas){
-            tarefa.getUsuario().setSenha("");
-        }
-        return tarefas;
+//    public List<Tarefa> listar(Long id){
+//        List<Tarefa> tarefas = tarefaRepository.findAllByUsuario_Id(id);
+//        for(Tarefa tarefa: tarefas){
+//            tarefa.getUsuario().setSenha("");
+//        }
+//        return tarefas;
+//    }
+    public List<Tarefa> listar(){
+        return tarefaRepository.findAllByUsuario_IdOrderByData(70l);
     }
 
     public Tarefa salvarTarefa(Tarefa tarefa) {

@@ -17,16 +17,15 @@ public class UsuarioController {
 
     @CrossOrigin
     @PostMapping("/salvar")
-    public ResponseEntity<Login> salvarUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<String> salvarUsuario(@RequestBody Usuario usuario){
         if(usuarioService.getUsuario(usuario.getLogin()).isPresent()){
-            return new ResponseEntity<>(new Login(), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Login ja existente!", HttpStatus.BAD_REQUEST);
         }
         try{
             Usuario user = usuarioService.salvarUsuario(usuario);
-            Login newLogin = new Login(user.getLogin(), user.getSenha());
-            return new ResponseEntity<>(newLogin, HttpStatus.OK);
+            return new ResponseEntity<>("Usuario Cadastrado com Sucesso!", HttpStatus.ACCEPTED);
         }catch (Exception ex){
-            return new ResponseEntity<>(new Login(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Erro ao cadastrar!", HttpStatus.BAD_REQUEST);
         }
     }
     @CrossOrigin

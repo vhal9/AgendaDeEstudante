@@ -24,9 +24,11 @@ public class EtiquetaController {
 
     @CrossOrigin
     @GetMapping("/listar")
-    public ResponseEntity<List> listar(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha){
-        Optional<Usuario> user = usuarioService.getUsuario(login);
-        if( user.isPresent() && user.get().getSenha().equals(senha)) {
+//    public ResponseEntity<List> listar(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha){
+    public ResponseEntity<List> listar(){
+        Optional<Usuario> user = usuarioService.getUsuario("vhal9");
+        //if( user.isPresent() && user.get().getSenha().equals(senha)) {
+        if(true){
             return new ResponseEntity<>(etiquetaService.listar(), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);
@@ -34,18 +36,29 @@ public class EtiquetaController {
 
     @CrossOrigin
     @PostMapping("/salvar")
-    public ResponseEntity<String> salvar(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha,@RequestBody Etiqueta etiqueta){
-        Optional<Usuario> user = usuarioService.getUsuario(login);
-        if( user.isPresent() && user.get().getSenha().equals(senha)) {
-            try {
-                etiqueta.setUsuario(user.get());
-                etiquetaService.salvar(etiqueta);
-                return new ResponseEntity<>("Etiqueta salva com sucesso!", HttpStatus.CREATED);
-            }catch (Exception ex){
-                return new ResponseEntity<>("Erro ao salvar!", HttpStatus.BAD_REQUEST);
-            }
+//    public ResponseEntity<String> salvar(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha,@RequestBody Etiqueta etiqueta){
+//        Optional<Usuario> user = usuarioService.getUsuario(login);
+//        if( user.isPresent() && user.get().getSenha().equals(senha)) {
+//            try {
+//                etiqueta.setUsuario(user.get());
+//                etiquetaService.salvar(etiqueta);
+//                return new ResponseEntity<>("Etiqueta salva com sucesso!", HttpStatus.CREATED);
+//            }catch (Exception ex){
+//                return new ResponseEntity<>("Erro ao salvar!", HttpStatus.BAD_REQUEST);
+//            }
+//        }
+//        return new ResponseEntity<>("Nao autorizado!", HttpStatus.UNAUTHORIZED);
+//    }
+    public ResponseEntity<String> salvar(@RequestBody Etiqueta etiqueta){
+        try {
+            Optional<Usuario> user = usuarioService.getUsuario("a");
+            etiqueta.setUsuario(user.get());
+            etiquetaService.salvar(etiqueta);
+            return new ResponseEntity<>("Etiqueta salva com sucesso!", HttpStatus.CREATED);
+        }catch (Exception ex){
+            return new ResponseEntity<>("Erro ao salvar!", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Nao autorizado!", HttpStatus.UNAUTHORIZED);
+
     }
 
     @CrossOrigin

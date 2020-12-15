@@ -11,7 +11,7 @@ public class Etiqueta {
 
     private String nome;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="id_usuario", referencedColumnName = "id", nullable = false)
     private Usuario usuario;
 
