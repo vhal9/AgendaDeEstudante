@@ -14,7 +14,7 @@
      
     <div class="botoes">
         <div class="col-md-1">
-            <b-button variant="warning" > Entrar </b-button>
+            <b-button variant="warning" @click="salvar" > Entrar </b-button>
         </div>
         <div class="col-md-1">
             <b-button variant="warning" class="link" to="/CadastroUsuario"> Cadastrar </b-button>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import UsuarioService from '../services/usuarioService';
     export default {
     name: 'Login',
     data(){
@@ -35,12 +36,25 @@
         }
     },
     methods:{
-        teste(){
-            console.log(localStorage.login);
-        }
+        salvar(){
+            UsuarioService.logar(this.user).then(() => {
+                localStorage.setItem('nome', this.user.login);
+                sessionStorage.setItem('nome', this.user.login);
+                this.$router.push("/");
+            }).catch(() => {
+                this.$toast.error("Erro ao realizar o login");
+            });
+        },
+        verificarUsuario(){
+            if(!(localStorage.nome === undefined || localStorage.nome=== null)){
+                
+                this.$router.push("/");
+            }
+        },
     },
     mounted(){
-        this.teste();
+        this.verificarUsuario(),
+        this.teste()
     }
   
 }

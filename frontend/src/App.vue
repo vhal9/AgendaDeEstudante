@@ -1,6 +1,6 @@
 <template>
     <v-app>
-      <Menu />
+      <Menu v-if="verificarLogin()" />
       <router-view /> 
     </v-app>
     
@@ -13,6 +13,13 @@ export default {
   name: 'App',
   components: {
     Menu,
+  },
+  methods:{
+      verificarLogin(){
+        console.log("teste");
+        if(localStorage.nome === undefined || localStorage.nome === null) return false;
+        return true
+      }
   }
 };
 </script>

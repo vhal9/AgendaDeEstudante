@@ -53,13 +53,11 @@
         salvarUsuario(){
             UsuarioService.salvar(this.user)
             .then(resposta => {
-                if(resposta.status === 201){
-                    this.$toast.success(resposta.data);
-                    this.limpar();
-                    setTimeout(() => {
-                        this.$router.push("/login");
-                    }, 2000);
-                }
+                this.$toast.success(resposta.data);
+                this.limpar();
+                setTimeout(() => {
+                    this.$router.push("/login");
+                }, 2000);
                 
             }).catch(error => {
                 this.$toast.error(error);

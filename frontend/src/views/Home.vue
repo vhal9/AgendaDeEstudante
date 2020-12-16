@@ -7,7 +7,6 @@
                     <v-card
                         color="#ffff99"
                         class="card-home"
-                        
                     >
                         <v-card-title class="headline">
                             {{tarefa.titulo}}
@@ -109,10 +108,10 @@
                 })
             },
             formatarData(data){
-                return moment(String(data)).format('DD/MM/YYYY');
+                return moment(String(data)).utcOffset('+0000').format('DD/MM/YYYY');
             },
             formatarDataInput(data){
-                return moment(String(data)).format('YYYY-MM-DD');
+                return moment(String(data)).utcOffset('+0000').format('YYYY-MM-DD');
             },
             excluirTarefa(id){
                 TarefasService.excluir(id).then(resposta =>{
@@ -146,7 +145,6 @@
                 this.dialog = false;
             },
             salvar(){
-                console.log(this.tarefaEdicao);
                 this.tarefaEdicao.etiqueta = this.etiquetas.find(element => element.text === this.tarefaEdicao.etiqueta.nome );
                 TarefasService.alterar(clone(this.tarefaEdicao)).then(resposta=>{
                     this.$toast.success(resposta.data);
@@ -165,6 +163,11 @@
                 if(this.tarefaEdicao.titulo === "") return true;
                 if(this.tarefaEdicao.descricao === "") return true;
                 if(this.tarefaEdicao.data === "") return true;
+            },
+            verificarUsuario(){
+                if(localStorage.nome === undefined || localStorage.nome=== null){
+                    this.$router.push("/login");
+                }
             }
 
 
@@ -172,6 +175,7 @@
         mounted(){
             this.listar();
             this.listarEtiquetas();
+            this.verificarUsuario();
         }
         
         

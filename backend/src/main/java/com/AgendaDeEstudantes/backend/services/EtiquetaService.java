@@ -13,8 +13,8 @@ public class EtiquetaService {
     @Autowired
     EtiquetaRepository etiquetaRepository;
 
-    public List<Etiqueta> listar(){
-        return etiquetaRepository.findAll();
+    public List<Etiqueta> listar(Long id){
+        return etiquetaRepository.findAllByUsuario_Id(id);
     }
     public Etiqueta salvar(Etiqueta etiqueta){
         return etiquetaRepository.save(etiqueta);

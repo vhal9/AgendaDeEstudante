@@ -24,31 +24,30 @@ public class EtiquetaController {
 
     @CrossOrigin
     @GetMapping("/listar")
-//    public ResponseEntity<List> listar(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha){
-    public ResponseEntity<List> listar(){
-        Optional<Usuario> user = usuarioService.getUsuario("vhal9");
-        //if( user.isPresent() && user.get().getSenha().equals(senha)) {
-        if(true){
-            return new ResponseEntity<>(etiquetaService.listar(), HttpStatus.OK);
+    public ResponseEntity<List> listar(@RequestHeader(value="login") String login){
+
+        Optional<Usuario> user = usuarioService.getUsuario(login);
+        if( user.isPresent()) {
+            return new ResponseEntity<>(etiquetaService.listar(user.get().getId()), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);
     }
 
     @CrossOrigin
     @PostMapping("/salvar")
-//    public ResponseEntity<String> salvar(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha,@RequestBody Etiqueta etiqueta){
-//        Optional<Usuario> user = usuarioService.getUsuario(login);
-//        if( user.isPresent() && user.get().getSenha().equals(senha)) {
-//            try {
-//                etiqueta.setUsuario(user.get());
-//                etiquetaService.salvar(etiqueta);
-//                return new ResponseEntity<>("Etiqueta salva com sucesso!", HttpStatus.CREATED);
-//            }catch (Exception ex){
-//                return new ResponseEntity<>("Erro ao salvar!", HttpStatus.BAD_REQUEST);
-//            }
-//        }
-//        return new ResponseEntity<>("Nao autorizado!", HttpStatus.UNAUTHORIZED);
-//    }
+    public ResponseEntity<String> salvar(@RequestHeader(value="login") String login, @RequestBody Etiqueta etiqueta){
+        Optional<Usuario> user = usuarioService.getUsuario(login);
+        if( user.isPresent()) {
+            try {
+                etiqueta.setUsuario(user.get());
+                etiquetaService.salvar(etiqueta);
+                return new ResponseEntity<>("Etiqueta salva com sucesso!", HttpStatus.CREATED);
+            }catch (Exception ex){
+                return new ResponseEntity<>("Erro ao salvar!", HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<>("Nao autorizado!", HttpStatus.UNAUTHORIZED);
+    }
     public ResponseEntity<String> salvar(@RequestBody Etiqueta etiqueta){
         try {
             Optional<Usuario> user = usuarioService.getUsuario("a");
@@ -63,9 +62,9 @@ public class EtiquetaController {
 
     @CrossOrigin
     @PutMapping("/alterar")
-    public ResponseEntity<String> alterar(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha, @RequestBody Etiqueta etiqueta){
+    public ResponseEntity<String> alterar(@RequestHeader(value="login") String login, @RequestBody Etiqueta etiqueta){
         Optional<Usuario> user = usuarioService.getUsuario(login);
-        if( user.isPresent() && user.get().getSenha().equals(senha)) {
+        if( user.isPresent() ) {
             try {
                 etiquetaService.alterar(etiqueta);
                 return new ResponseEntity<>("Etiqueta alterada com Sucesso!", HttpStatus.OK);
@@ -78,9 +77,9 @@ public class EtiquetaController {
 
     @CrossOrigin
     @DeleteMapping("/excluir/{id}")
-    public ResponseEntity<String> excluir(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha, @PathVariable Long id){
+    public ResponseEntity<String> excluir(@RequestHeader(value="login") String login, @PathVariable Long id){
         Optional<Usuario> user = usuarioService.getUsuario(login);
-        if( user.isPresent() && user.get().getSenha().equals(senha)) {
+        if( user.isPresent() ) {
             if(etiquetaService.excluir(id)){
                 return new ResponseEntity<>("Etiqueta excluida com Sucesso!", HttpStatus.OK);
             }
@@ -90,18 +89,6 @@ public class EtiquetaController {
         }
         return new ResponseEntity<>("Nao autorizado!", HttpStatus.UNAUTHORIZED);
     }
-
-//    @CrossOrigin
-//    @GetMapping("/get/{id}")
-//    public ResponseEntity<Optional> get(@RequestHeader(value="login") String login, @RequestHeader(value="senha") String senha, @PathVariable Long id) {
-//        Optional<Usuario> user = usuarioService.getUsuario(login);
-//        if( user.isPresent() && user.get().getSenha().equals(senha)) {
-//            return new ResponseEntity<>(etiquetaService.getEtiqueta(id), HttpStatus.OK);
-//        }
-//        Optional<Etiqueta> etiqueta = null;
-//        return new ResponseEntity<Optional>(etiqueta, HttpStatus.UNAUTHORIZED);
-//    }
-
 
 
 }

@@ -36,6 +36,7 @@
 <script>
 import EtiquetaService from '../services/etiquetaService';
 import TarefaService from '../services/tarefasService';
+const clone = require("lodash.clone");
 export default {
   name: 'CadastroTarefa',
   data(){
@@ -61,9 +62,9 @@ export default {
     },
     methods:{
         salvarTarefa(){
-            
-            this.tarefa.etiqueta = {'id': this.tarefa.etiqueta}
-            TarefaService.salvar(this.tarefa).then(resposta => {
+            let tarefaSalvar = clone(this.tarefa);
+            tarefaSalvar.etiqueta = clone({'id': this.tarefa.etiqueta})
+            TarefaService.salvar(tarefaSalvar).then(resposta => {
                 if(resposta.status === 201){
                     this.$toast.success(resposta.data);
                     this.limpar();
@@ -103,12 +104,18 @@ export default {
                     id: null
                 }
             }
+        },
+        verificarLogin(){
+            if(localStorage.nome === undefined || localStorage.nome === null){
+                this.$router.push("/login")
+            }
         }
         
 
     },
     mounted(){
         this.listarEtiquetas();
+        this.verificarLogin();
     }
   
 }

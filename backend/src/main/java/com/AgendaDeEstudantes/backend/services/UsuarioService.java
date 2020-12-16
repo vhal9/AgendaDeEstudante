@@ -28,10 +28,6 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario alterarUsuario(Usuario usuario){
-        return usuarioRepository.save(usuario);
-    }
-
     public Boolean verificarAutorizacao(Login login){
         Optional<Usuario> user = this.getUsuario(login.getLogin());
         return user.isPresent() && user.get().getSenha().equals(login.getSenha());

@@ -57,8 +57,16 @@
             limpar(){
                 this.etiqueta.id = null;
                 this.etiqueta.nome = ''
+            },
+            verificarLogin(){
+                if(localStorage.nome === undefined || localStorage.nome === null){
+                    this.$router.push("/login")
+                }
             }
 
+        },
+        mounted(){
+            this.verificarLogin();
         }
 
     }
