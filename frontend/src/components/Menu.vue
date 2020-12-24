@@ -1,57 +1,64 @@
-<template>
-  <div>
-    <b-navbar class="header" type="light" variant="warning" >
-        <b-navbar-brand > <b-icon icon="person-circle" ></b-icon> Agenda de Estudante</b-navbar-brand>
-        <b-navbar-nav class="col-md-12">
-        <b-nav-item  to="/">Home</b-nav-item>
-        <b-nav-item  to="/cadastroTarefa">Cadastrar Tarefa</b-nav-item>
-        <b-nav-item   to="/cadastroEtiqueta">Cadastrar Etiqueta</b-nav-item>
-        <b-nav-item class="identificador" href="#" disabled >{{nomeUsuario}}</b-nav-item>
-        <b-nav-item  @click="logout"><b-icon icon="power" > </b-icon> Logout</b-nav-item>
-        <!-- Navbar dropdowns -->
-        
-        </b-navbar-nav>
-    </b-navbar>
-  </div>
+<template lang="pug">
+	#menu-lateral
+		v-navigation-drawer(expand-on-hover dark)
+			v-list
+				v-list-item
+					v-list-item-icon
+						v-icon mdi-account-circle
+					v-list-item-content
+						v-list-item-title Victor Hugo
+				v-divider
+				v-list-item-group
+					v-list-item(v-for='item in items' :key='item.title' :to='item.link')
+						v-list-item-icon
+							v-icon {{item.icon}}
+						v-list-item-content
+							v-list-item-title {{item.title}}
+
+
 </template>
 
 <script>
-import UsuarioService from '../services/usuarioService';
-export default {
-  name: 'Menu',
-  data(){
-    return{
-      nomeUsuario: ''
-    }
-  },
-  methods:{
-      logout(){
-          console.log("testando");
-          localStorage.removeItem('nome');
-          console.log("removido")
-          this.$router.push("/login");
-      },
-      getNomeUsuario(){
-          UsuarioService.getNomeUsuario().then(resposta =>{
-              this.nomeUsuario = resposta.data;
-          })
-      }
-
-  },
-  mounted(){
-      this.getNomeUsuario();
-  }
-  
-  
-}
+	import UsuarioService from "../services/usuarioService";
+	export default {
+		name: "Menu",
+		data() {
+			return {
+				nomeUsuario: "",
+				items: [
+					{ title: "Home", icon: "mdi-home", link:"/"},
+					{ title: "Nova Tarefa", icon: "mdi-calendar-plus", link:"/cadastrarTarefa"},
+					{ title: "Nova Etiqueta", icon: "mdi-tag", link:"/cadastrarEtiqueta"},
+				],
+			};
+		},
+		methods: {
+			logout() {
+				console.log("testando");
+				localStorage.removeItem("nome");
+				console.log("removido");
+				this.$router.push("/login");
+			},
+			getNomeUsuario() {
+				UsuarioService.getNomeUsuario().then((resposta) => {
+					this.nomeUsuario = resposta.data;
+				});
+			},
+		},
+		mounted() {
+			this.getNomeUsuario();
+		}, 
+	};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .header{
-    min-height : 80px;
-  }
-  .identificador{
-      margin-left: 30%;
-  }
+	#menu-lateral{
+		min-height: 100%;
+		height: 100%;
+	}
+	.theme--light.v-application{
+		background-color: blueviolet;
+	}
+
 </style>
