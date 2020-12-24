@@ -6,14 +6,6 @@ import vuetify from './plugins/vuetify';
 
 import VueToast from 'vue-toast-notification';
 
-import { BootstrapVue,  BootstrapVueIcons} from 'bootstrap-vue'
-
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-// Install BootstrapVue
-Vue.use(BootstrapVue)
-Vue.use(BootstrapVueIcons)
 
 Vue.use(VueToast, {
   duration: 2000,
