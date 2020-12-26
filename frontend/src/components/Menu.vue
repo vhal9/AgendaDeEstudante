@@ -1,10 +1,11 @@
 <template lang="pug">
 	#menu-lateral
-		v-navigation-drawer(expand-on-hover dark)
+		v-card.mx-auto(heigth='100%', outlined)
+		v-navigation-drawer(expand-on-hover, dark)
 			v-list
 				v-list-item
 					v-list-item-icon
-						v-icon mdi-account-circle
+						v-icon mdi-account
 					v-list-item-content
 						v-list-item-title Victor Hugo
 				v-divider
@@ -27,18 +28,12 @@
 				nomeUsuario: "",
 				items: [
 					{ title: "Home", icon: "mdi-home", link:"/"},
-					{ title: "Nova Tarefa", icon: "mdi-calendar-plus", link:"/cadastrarTarefa"},
-					{ title: "Nova Etiqueta", icon: "mdi-tag", link:"/cadastrarEtiqueta"},
+					{ title: "Nova Tarefa", icon: "mdi-calendar-plus", link:"/cadastroTarefa"},
+					{ title: "Nova Etiqueta", icon: "mdi-tag", link:"/cadastroEtiqueta"},
 				],
 			};
 		},
 		methods: {
-			logout() {
-				console.log("testando");
-				localStorage.removeItem("nome");
-				console.log("removido");
-				this.$router.push("/login");
-			},
 			getNomeUsuario() {
 				UsuarioService.getNomeUsuario().then((resposta) => {
 					this.nomeUsuario = resposta.data;
@@ -55,10 +50,24 @@
 <style scoped>
 	#menu-lateral{
 		min-height: 100%;
-		height: 100%;
+		max-width: 30%;
+		min-width: 10%;
 	}
-	.theme--light.v-application{
-		background-color: blueviolet;
+	
+	.mx-auto{
+		position: fixed;
+	}
+	
+	.v-navigation-drawer {
+		transition-duration: 0.6s !important;
+	}
+	
+	.v-navigation-drawer.v-navigation-drawer--is-mouseover-navigation-drawer--open.v-navigation-drawer--open-on-hover.theme--light{
+		width: 300px !important;
+	}
+	
+	.v-list-item--dense, .v-list--dense .v-list-item {
+		min-height: 55px !important;
 	}
 
 </style>
