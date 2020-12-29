@@ -21,6 +21,6 @@
 
 <style scoped>
 	.botao{
-		color: white;
+		color: white !important;
 	}
 </style>
