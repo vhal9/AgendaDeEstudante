@@ -1,5 +1,5 @@
 <template lang='pug'>
-	v-btn.mr-4.botao(:disabled="disabled", color='#3949AB') {{label}}
+	v-btn.mr-4.botao(:disabled="disabled", color='#3949AB', @click="actionClick") {{label}}
 </template>
 
 <script>
@@ -12,9 +12,15 @@
 			},
 			label:{
 				type:String,
-				default:'Salvar'
+				required: true
+
 			},
 
+		},
+		methods:{
+			actionClick: function(){
+				this.$emit("clickBotao");
+			},
 		}
 	}
 </script>

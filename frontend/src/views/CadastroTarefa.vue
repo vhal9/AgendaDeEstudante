@@ -6,8 +6,8 @@
 			v-text-field(v-model='tarefa.descricao' label='Descrição' :rules='descricaoRule')
 			v-text-field(v-model='tarefa.data' label='Data' type='date' :rules='dataRule')
 			v-select(v-model='tarefa.etiqueta' :items='etiquetas' label='Etiqueta' :rules='etiquetaRule')
-			Botao(label="Limpar", @click='limpar')
-			Botao(label="Salvar", :disabled="isDisabled", @click='salvarTarefa')
+			Botao(label="Limpar", @clickBotao='limpar')
+			Botao(label="Salvar", :disabled="isDisabled", @clickBotao='salvarTarefa')
 			
 		
 </template>
@@ -92,6 +92,7 @@ const clone = require("lodash.clone");
             })
         },
         limpar(){
+            console.log('teste2')
 			this.$refs.form.reset()
             this.tarefa ={
                 id:null,
@@ -116,7 +117,7 @@ const clone = require("lodash.clone");
     mounted(){
 		this.verificarLogin();
         this.listarEtiquetas();
-    }
+    },
   
 }
 </script>
