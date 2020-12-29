@@ -1,60 +1,58 @@
-<template>
-    <div class="container">
-
-        <div class="titulo">
-            <h2>Cadastro de Tarefa</h2>
-        </div>
-        <div class="form">
-            <div class="col-md-5" >
-                <b-form-input v-model="tarefa.titulo" placeholder="Título"></b-form-input>
-            </div>
-            <div class="col-md-5" >
-                <b-form-input v-model="tarefa.descricao" placeholder="Descrição"></b-form-input>
-            </div>
-            <div class="col-md-5">
-                <b-form-input v-model="tarefa.data"  type="date"></b-form-input>
-            </div>
-            <div class="col-md-5">
-                <b-form-select v-model="tarefa.etiqueta" :options="etiquetas" placeholder="Etiqueta"></b-form-select>
-            </div>
-
-
-              
-        </div>
-      
-      <div class="botoes">
-          <div class="col-md-1">
-              <b-button variant="warning" class="link" to="/" > Voltar </b-button>
-          </div>
-          <div class="col-md-1">
-              <b-button variant="warning" @click="salvarTarefa" :disabled='isDisabled'> Cadastrar </b-button>
-          </div>
-      </div>
-    </div>
+<template lang="pug">
+	#formulario.container
+		h3 Cadastro de Tarefas
+		v-form(ref='form', lazy-validation)
+			v-text-field(v-model='tarefa.titulo' label='Título' :rules='tituloRule')
+			v-text-field(v-model='tarefa.descricao' label='Descrição' :rules='descricaoRule')
+			v-text-field(v-model='tarefa.data' label='Data' type='date' :rules='dataRule')
+			v-select(v-model='tarefa.etiqueta' :items='etiquetas' label='Etiqueta' :rules='etiquetaRule')
+			Botao(label="Limpar", @click='limpar')
+			Botao(label="Salvar", :disabled="isDisabled", @click='salvarTarefa')
+			
+		
 </template>
 
 <script>
 import EtiquetaService from '../services/etiquetaService';
 import TarefaService from '../services/tarefasService';
+import Botao from '../components/atoms/Botoes';
+
 const clone = require("lodash.clone");
-export default {
-  name: 'CadastroTarefa',
-  data(){
-        return {
-            tarefa:{
-                id:null,
-                titulo:'',
-                descricao:'',
-                data:'',
-                etiqueta:null,
-                usuario:{
-                    id: null
-                }
-              },
-              etiquetas:[{ value: null, text: 'Etiqueta' },],
-              msg:'',
-          }
-    },
+	export default {
+    name: 'CadastroTarefa',
+    components:{
+		Botao
+	},
+	data(){
+		return {
+			tarefa:{
+				id:null,
+				titulo:'',
+				descricao:'',
+				data:'',
+				etiqueta:null,
+				usuario:{
+					id: null
+				}
+			},
+			etiquetas:[{ value: null, text: 'Etiqueta' },],
+			msg:'',
+			tituloRule:[
+				v => !!v || 'Título é obrigátorio',
+                v => (v && v.length >= 3 && v.length <= 20  ) || 'Título deve conter entre 3 e 20 caracteres'  
+			],
+			descricaoRule:[
+				v => !!v || 'Descrição é obrigátoria',
+				v => (v  && v.length >= 5 && v.length <= 30) || 'Descrição deve conter entre 5 e 30 caracteres'
+			],
+			dataRule:[
+				v => !!v || 'Data é obrigátoria',
+			],
+			etiquetaRule:[
+				v => !!v  || 'Etiqueta é obrigatória'
+			]
+		}
+	},
     computed:{
         isDisabled: function(){
             return this.desabilitarBotaoSalvar();
@@ -79,7 +77,7 @@ export default {
             if(this.tarefa.descricao === "") return true;
             if(this.tarefa.data === "") return true;
             if(this.tarefa.etiqueta === null) return true;
-            if(this.tarefa.nome === "") return true;
+			return false;
 
         },
         listarEtiquetas(){
@@ -94,6 +92,7 @@ export default {
             })
         },
         limpar(){
+			this.$refs.form.reset()
             this.tarefa ={
                 id:null,
                 titulo:'',
@@ -103,7 +102,8 @@ export default {
                 usuario:{
                     id: null
                 }
-            }
+			}
+			
         },
         verificarLogin(){
             if(localStorage.nome === undefined || localStorage.nome === null){
@@ -114,8 +114,8 @@ export default {
 
     },
     mounted(){
+		this.verificarLogin();
         this.listarEtiquetas();
-        this.verificarLogin();
     }
   
 }
@@ -123,28 +123,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .container{
-        background-color: #ffff99;
-        margin-top: 2%;
-        min-height: 300px;
-    }
-    .titulo{
-        margin-top: 2%;
-        padding: 10px;
-    }
-    .form{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 2%;
-    }
-    .botoes{
-        display: flex;
-        flex-direction: row;
-        justify-content:center;
-        margin-top: 2%;
-    }
-    .link{
-        color:black;
-    }
+	#formulario{
+		margin-top: 10%;
+        font-size: 1.3rem;
+        text-align: center;
+	}
 </style>
