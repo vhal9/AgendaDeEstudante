@@ -1,9 +1,8 @@
 <template lang="pug">
-	v-app
+	v-app.container
+		Menu(v-if="verificarLogin()")
 		Header
-		.conteudo
-			Menu(v-if="verificarLogin()")
-			router-view
+		router-view.col-sm-6
 
 </template>
 
@@ -32,14 +31,10 @@
 		font-family: Avenir, Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		text-align: center;
-
-	}
-	.conteudo{
 		display: flex;
-		flex-direction: row !important;
-		min-height: 92%;
-		
+		flex-direction: column;
+		justify-content: center;
+		color:#3949AB;
 	}
 
 	
