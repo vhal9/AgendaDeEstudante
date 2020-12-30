@@ -1,7 +1,7 @@
 <template lang="pug">
 	v-app.container
 		Menu(v-if="verificarLogin()")
-		Header
+		Header(v-if="verificarLogin()")
 		router-view.col-sm-6
 
 </template>
@@ -18,7 +18,6 @@
 		},
 		methods:{
 			verificarLogin(){
-				console.log("teste");
 				if(localStorage.nome === undefined || localStorage.nome === null) return false;
 				return true
 			}

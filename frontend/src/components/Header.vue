@@ -5,7 +5,7 @@
                 v-icon.icone1 mdi-account-circle
                 span Agenda de Estudante
             v-spacer
-            span(v-if="verificarLogin()" @click='logout')
+            span(@click='logout')
                 a Logout 
                     v-icon.icone mdi-power 
 </template>
@@ -18,11 +18,8 @@
 				localStorage.removeItem("nome");
 				this.$router.push("/login");
             },
-            verificarLogin(){
-				if(localStorage.nome === undefined || localStorage.nome === null) return false;
-				return true
-			}
-        }
+        },
+        
     }
 </script>
 <style scoped>
