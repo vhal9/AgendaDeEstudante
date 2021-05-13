@@ -2,6 +2,8 @@
 
 Trabalho de Programação Web - Sistema de Controle de Tarefas - Agenda de Estudante
 
+O projeto já foi entregue, porém se encontra em desenvolvimento para inserir melhorias.
+
 Link do vídeo - https://drive.google.com/file/d/14ZCdnerkXA1aCdkm2JlRwuax-VQ7bz3h/view?usp=sharing
 Necessário estar logado com email institucional da UFLA.
 
